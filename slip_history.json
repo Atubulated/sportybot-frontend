@@ -1,0 +1,538 @@
+[
+    {
+        "target_odds": 10.0,
+        "actual_odds": 12.26,
+        "booking_code": "MANUAL-ENTRY-REQUIRED",
+        "number_of_legs": 4,
+        "picks": [
+            {
+                "selected_market": "Home Win",
+                "odds": 2.26,
+                "confidence": 85,
+                "match_name": "Nottingham Forest - Leeds"
+            },
+            {
+                "selected_market": "Home Win",
+                "odds": 2.16,
+                "confidence": 85,
+                "match_name": "Everton - Crystal Palace"
+            },
+            {
+                "selected_market": "Home Win",
+                "odds": 1.46,
+                "confidence": 85,
+                "match_name": "Manchester City - Bournemouth"
+            },
+            {
+                "selected_market": "Over 1.5 Goals",
+                "odds": 1.72,
+                "confidence": 85,
+                "match_name": "Brighton - Aston Villa"
+            }
+        ],
+        "slip_id": "SLIP-001",
+        "date_generated": "2026-07-20 17:39",
+        "status": "PENDING",
+        "results": {}
+    },
+    {
+        "target_odds": 10.0,
+        "actual_odds": 10.67,
+        "booking_code": "MANUAL-ENTRY-REQUIRED",
+        "number_of_legs": 3,
+        "picks": [
+            {
+                "selected_market": "Over 1.5 Goals",
+                "odds": 1.83,
+                "confidence": 85,
+                "match_name": "Nottingham Forest - Leeds"
+            },
+            {
+                "selected_market": "Home Win",
+                "odds": 2.7,
+                "confidence": 85,
+                "match_name": "Ipswich Town - Sunderland"
+            },
+            {
+                "selected_market": "Home Win",
+                "odds": 2.16,
+                "confidence": 85,
+                "match_name": "Everton - Crystal Palace"
+            }
+        ],
+        "slip_id": "SLIP-002",
+        "date_generated": "2026-07-20 17:41",
+        "status": "PENDING",
+        "results": {}
+    },
+    {
+        "target_odds": 10.0,
+        "risk_profile": "safe",
+        "actual_odds": 10.0,
+        "booking_code": "MANUAL-ENTRY-REQUIRED",
+        "number_of_legs": 10,
+        "picks": [
+            {
+                "selected_market": "Over 0.5",
+                "estimated_odds": 1.25,
+                "confidence": 90,
+                "match_name": "Hull City - Manchester United"
+            },
+            {
+                "selected_market": "Over 0.5",
+                "estimated_odds": 1.25,
+                "confidence": 90,
+                "match_name": "Ipswich Town - Sunderland"
+            },
+            {
+                "selected_market": "Double Chance (Home/Draw)",
+                "estimated_odds": 1.25,
+                "confidence": 90,
+                "match_name": "Everton - Crystal Palace"
+            },
+            {
+                "selected_market": "Double Chance (Home/Draw)",
+                "estimated_odds": 1.28,
+                "confidence": 90,
+                "match_name": "Brentford - Tottenham"
+            },
+            {
+                "selected_market": "Double Chance (Home/Away)",
+                "estimated_odds": 1.25,
+                "confidence": 90,
+                "match_name": "Manchester City - Bournemouth"
+            },
+            {
+                "selected_market": "Over 0.5",
+                "estimated_odds": 1.25,
+                "confidence": 90,
+                "match_name": "Brighton - Aston Villa"
+            },
+            {
+                "selected_market": "Over 1.5",
+                "estimated_odds": 1.25,
+                "confidence": 90,
+                "match_name": "Newcastle - Liverpool"
+            },
+            {
+                "selected_market": "Double Chance (Home/Draw)",
+                "estimated_odds": 1.25,
+                "confidence": 90,
+                "match_name": "Fulham - Chelsea"
+            },
+            {
+                "selected_market": "Double Chance (Home/Draw)",
+                "estimated_odds": 1.28,
+                "confidence": 85,
+                "match_name": "Arsenal - Coventry City"
+            },
+            {
+                "selected_market": "Both Teams to Score: GG",
+                "estimated_odds": 1.28,
+                "confidence": 85,
+                "match_name": "Nottingham Forest - Leeds"
+            }
+        ],
+        "slip_id": "SLIP-003",
+        "date_generated": "2026-07-20 17:48",
+        "status": "PENDING",
+        "results": {}
+    },
+    {
+        "target_odds": 10.0,
+        "risk_profile": "safe",
+        "actual_odds": 9.01,
+        "booking_code": "MANUAL-ENTRY-REQUIRED",
+        "number_of_legs": 9,
+        "picks": [
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Arsenal - Coventry City"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Nottingham Forest - Leeds"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Everton - Crystal Palace"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Brighton - Aston Villa"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.25,
+                "confidence": 92,
+                "match_name": "Fulham - Chelsea"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 90,
+                "match_name": "Hull City - Manchester United"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 90,
+                "match_name": "Ipswich Town - Sunderland"
+            },
+            {
+                "selected_market": "Total Goals Under 2.5",
+                "estimated_odds": 1.28,
+                "confidence": 90,
+                "match_name": "Brentford - Tottenham"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 90,
+                "match_name": "Manchester City - Bournemouth"
+            }
+        ],
+        "slip_id": "SLIP-004",
+        "date_generated": "2026-07-20 17:56",
+        "status": "PENDING",
+        "results": {}
+    },
+    {
+        "target_odds": 10.0,
+        "risk_profile": "safe",
+        "actual_odds": 9.01,
+        "booking_code": "MANUAL-ENTRY-REQUIRED",
+        "number_of_legs": 9,
+        "picks": [
+            {
+                "selected_market": "Total Goals Under 2.5",
+                "estimated_odds": 1.25,
+                "confidence": 92,
+                "match_name": "Arsenal - Coventry City"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Ipswich Town - Sunderland"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Everton - Crystal Palace"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Brentford - Tottenham"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Brighton - Aston Villa"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Newcastle - Liverpool"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 90,
+                "match_name": "Hull City - Manchester United"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 90,
+                "match_name": "Nottingham Forest - Leeds"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 90,
+                "match_name": "Manchester City - Bournemouth"
+            }
+        ],
+        "slip_id": "SLIP-005",
+        "date_generated": "2026-07-20 18:01",
+        "status": "PENDING",
+        "results": {}
+    },
+    {
+        "target_odds": 10.0,
+        "risk_profile": "safe",
+        "actual_odds": 11.0,
+        "booking_code": "MANUAL-ENTRY-REQUIRED",
+        "number_of_legs": 10,
+        "picks": [
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Arsenal - Coventry City"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.25,
+                "confidence": 92,
+                "match_name": "Nottingham Forest - Leeds"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Brentford - Tottenham"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Brighton - Aston Villa"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.25,
+                "confidence": 92,
+                "match_name": "Fulham - Chelsea"
+            },
+            {
+                "selected_market": "Total Goals Under 2.5",
+                "estimated_odds": 1.28,
+                "confidence": 90,
+                "match_name": "Ipswich Town - Sunderland"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.25,
+                "confidence": 90,
+                "match_name": "Everton - Crystal Palace"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 90,
+                "match_name": "Manchester City - Bournemouth"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 90,
+                "match_name": "Newcastle - Liverpool"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 85,
+                "match_name": "Hull City - Manchester United"
+            }
+        ],
+        "slip_id": "SLIP-006",
+        "date_generated": "2026-07-20 18:09",
+        "status": "PENDING",
+        "results": {}
+    },
+    {
+        "target_odds": 10.0,
+        "risk_profile": "safe",
+        "actual_odds": 9.01,
+        "booking_code": "MANUAL-ENTRY-REQUIRED",
+        "number_of_legs": 9,
+        "picks": [
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Arsenal - Coventry City"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.25,
+                "confidence": 92,
+                "match_name": "Hull City - Manchester United"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Ipswich Town - Sunderland"
+            },
+            {
+                "selected_market": "Total Goals Under 2.5",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Brentford - Tottenham"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Manchester City - Bournemouth"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Brighton - Aston Villa"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Newcastle - Liverpool"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Fulham - Chelsea"
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 90,
+                "match_name": "Nottingham Forest - Leeds"
+            }
+        ],
+        "slip_id": "SLIP-007",
+        "date_generated": "2026-07-20 18:30",
+        "status": "PENDING",
+        "results": {}
+    },
+    {
+        "target_odds": 10.0,
+        "risk_profile": "safe",
+        "actual_odds": 9.29,
+        "booking_code": "MANUAL-ENTRY-REQUIRED",
+        "number_of_legs": 9,
+        "picks": [
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Arsenal - Coventry City",
+                "match_id": 794294556
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Nottingham Forest - Leeds",
+                "match_id": 794294629
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Everton - Crystal Palace",
+                "match_id": 794294621
+            },
+            {
+                "selected_market": "Total Goals Under 2.5",
+                "estimated_odds": 1.28,
+                "confidence": 92,
+                "match_name": "Brighton - Aston Villa",
+                "match_id": 794294576
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.25,
+                "confidence": 90,
+                "match_name": "Hull City - Manchester United",
+                "match_id": 794294627
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 90,
+                "match_name": "Ipswich Town - Sunderland",
+                "match_id": 794294561
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 90,
+                "match_name": "Brentford - Tottenham",
+                "match_id": 794294622
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.28,
+                "confidence": 90,
+                "match_name": "Manchester City - Bournemouth",
+                "match_id": 794294630
+            },
+            {
+                "selected_market": "Both Teams To Score - Yes",
+                "estimated_odds": 1.32,
+                "confidence": 90,
+                "match_name": "Newcastle - Liverpool",
+                "match_id": 794294624
+            }
+        ],
+        "bet_links": [
+            {
+                "match": "Arsenal - Coventry City",
+                "market": "Both Teams To Score - Yes",
+                "link": "https://www.bet9ja.com/sportsbook/#/match/794294556"
+            },
+            {
+                "match": "Nottingham Forest - Leeds",
+                "market": "Both Teams To Score - Yes",
+                "link": "https://www.bet9ja.com/sportsbook/#/match/794294629"
+            },
+            {
+                "match": "Everton - Crystal Palace",
+                "market": "Both Teams To Score - Yes",
+                "link": "https://www.bet9ja.com/sportsbook/#/match/794294621"
+            },
+            {
+                "match": "Brighton - Aston Villa",
+                "market": "Total Goals Under 2.5",
+                "link": "https://www.bet9ja.com/sportsbook/#/match/794294576"
+            },
+            {
+                "match": "Hull City - Manchester United",
+                "market": "Both Teams To Score - Yes",
+                "link": "https://www.bet9ja.com/sportsbook/#/match/794294627"
+            },
+            {
+                "match": "Ipswich Town - Sunderland",
+                "market": "Both Teams To Score - Yes",
+                "link": "https://www.bet9ja.com/sportsbook/#/match/794294561"
+            },
+            {
+                "match": "Brentford - Tottenham",
+                "market": "Both Teams To Score - Yes",
+                "link": "https://www.bet9ja.com/sportsbook/#/match/794294622"
+            },
+            {
+                "match": "Manchester City - Bournemouth",
+                "market": "Both Teams To Score - Yes",
+                "link": "https://www.bet9ja.com/sportsbook/#/match/794294630"
+            },
+            {
+                "match": "Newcastle - Liverpool",
+                "market": "Both Teams To Score - Yes",
+                "link": "https://www.bet9ja.com/sportsbook/#/match/794294624"
+            }
+        ],
+        "slip_id": "SLIP-008",
+        "date_generated": "2026-07-20 18:47",
+        "status": "PENDING",
+        "results": {}
+    }
+]
