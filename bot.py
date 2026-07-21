@@ -1,10 +1,10 @@
 import os
+import csv
 from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 import logging
 import requests
-import pandas as pd
 from datetime import date
 from groq import Groq
 
@@ -17,11 +17,9 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-# Safety check to ensure keys are loaded
 if not TELEGRAM_TOKEN or not GROQ_API_KEY:
-    raise ValueError("⚠️ Missing API keys! Please check your .env file.")
+    raise ValueError("⚠️ Missing API keys! Please check your Environment Variables.")
 
-# Initialize the Groq AI Client
 ai_client = Groq(api_key=GROQ_API_KEY)
 
 # ==========================================
@@ -40,22 +38,18 @@ def fetch_thesportsdb():
         return []
 
 # ==========================================
-# MODULE 2: DATA LOGGING 
+# MODULE 2: DATA LOGGING (No Pandas needed!)
 # ==========================================
 def log_prediction_to_csv(home, away, prediction):
     file_exists = os.path.isfile('paper_trading_log.csv')
-    data = {
-        'Date': [date.today()],
-        'Home Team': [home],
-        'Away Team': [away],
-        'AI Prediction': [prediction],
-        'Result': ['Pending'] 
-    }
-    df = pd.DataFrame(data)
-    df.to_csv('paper_trading_log.csv', mode='a', header=not file_exists, index=False)
+    with open('paper_trading_log.csv', 'a', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        if not file_exists:
+            writer.writerow(['Date', 'Home Team', 'Away Team', 'AI Prediction', 'Result'])
+        writer.writerow([date.today(), home, away, prediction, 'Pending'])
 
 # ==========================================
-# MODULE 3: AI ANALYSIS (The Brain)
+# MODULE 3: AI ANALYSIS 
 # ==========================================
 def ask_ai_for_predictions(matches):
     matches_text = "\n".join([f"- {m['home']} vs {m['away']} (Time: {m['time']})" for m in matches])
@@ -70,7 +64,7 @@ def ask_ai_for_predictions(matches):
     2. Give a clear prediction (e.g., Home Win, Away Win, Over 2.5 Goals).
     3. Provide a brief, 2-sentence explanation for WHY.
     
-    IMPORTANT: Do NOT use any markdown formatting. Do not use asterisks (*), hashtags (#), or underscores (_). Just plain text.
+    IMPORTANT: Do NOT use any markdown formatting. Just plain text.
     """
 
     try:
@@ -83,7 +77,6 @@ def ask_ai_for_predictions(matches):
     except Exception as e:
         print("\n--- GROQ API ERROR DEBUG ---")
         print(e)
-        print("-----------------------------\n")
         return f"AI Error: Check terminal for details."
 
 # ==========================================
@@ -93,17 +86,16 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text('Welcome to SportyBot! Type /predict to get AI betting analysis for today\'s matches.')
 
 async def predict(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("🧠 Fetching live matches and waking up the AI analyst... (This will take ~2 seconds)")
+    await update.message.reply_text("🧠 Fetching live matches and waking up the AI analyst...")
     
     matches = fetch_thesportsdb()
     
     if not matches:
-        await update.message.reply_text("No soccer matches found in the database for today. Try again tomorrow!")
+        await update.message.reply_text("No soccer matches found in the database for today.")
         return
 
     ai_analysis = ask_ai_for_predictions(matches)
-    
-    final_message = f"📊 Today's AI Betting Analysis:\n\n{ai_analysis}\n\n(Match logged to CSV for paper trading tracking)"
+    final_message = f"📊 Today's AI Betting Analysis:\n\n{ai_analysis}\n\n(Match logged to CSV)"
     await update.message.reply_text(final_message)
 
     log_prediction_to_csv(matches[0]['home'], matches[0]['away'], "See Telegram Message")
@@ -114,10 +106,8 @@ async def predict(update: Update, context: ContextTypes.DEFAULT_TYPE):
 def main():
     print("Bot is starting up...")
     app = Application.builder().token(TELEGRAM_TOKEN).build()
-
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("predict", predict))
-
     app.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == '__main__':

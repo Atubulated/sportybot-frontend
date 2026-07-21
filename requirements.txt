@@ -1,5 +1,4 @@
 python-telegram-bot
 groq
-pandas
 requests
 python-dotenv
