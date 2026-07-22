@@ -23,10 +23,15 @@ load_dotenv(dotenv_path=dotenv_path)
 # 1. CONFIGURATION
 # ==========================================
 app = FastAPI(title="SportyBot Pro AI", version="13.0.0")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=[
+        "https://sportybot-frontend.vercel.app",  # Your deployed Vercel frontend
+        "http://localhost:3000",                  # Local Next.js development
+        "http://127.0.0.1:3000"                   # Local Next.js development
+    ],
+    allow_credentials=True, 
     allow_methods=["*"],
     allow_headers=["*"],
 )
