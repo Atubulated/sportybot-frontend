@@ -38,7 +38,7 @@ app.add_middleware(
 client = AsyncOpenAI(
     base_url="https://integrate.api.nvidia.com/v1",
     api_key=os.getenv("NVIDIA_API_KEY"),
-    timeout=300.0
+    timeout=300.0  # Increased to 5 minutes
 )
 
 supabase: Client = create_client(
@@ -172,7 +172,6 @@ async def analyze_match_with_risk_profile(match: dict, risk_profile: str):
         risk_instruction = "Seek high-value. Target confidence: 65%+"
         min_confidence = 65; max_odds = 4.00
     
-    # STRICT PROMPT TO PREVENT HALLUCINATIONS
     prompt = f"""
     You are an elite quantitative sports bettor.
     Match: {match['match_name']} ({match['league']})
@@ -199,11 +198,9 @@ async def analyze_match_with_risk_profile(match: dict, risk_profile: str):
         content = res.choices[0].message.content.strip().replace("```json", "").replace("```", "")
         result = json.loads(content)
         
-        # VALIDATION: Ensure the AI didn't hallucinate a market name
         selected = result.get('selected_market', '')
         available = match['available_markets']
         
-        # Check if the core market name exists in the available string
         core_market = selected.split(' - ')[-1] if ' - ' in selected else selected
         if core_market not in available and selected not in available:
             print(f"   ❌ VALIDATION FAILED: AI invented market '{selected}'")
@@ -220,14 +217,108 @@ async def analyze_match_with_risk_profile(match: dict, risk_profile: str):
         print(f"   ❌ AI Error: {e}")
         return None
 
-async def process_in_batches(matches, risk_profile, batch_size=3):
-    all_results = []
-    for i in range(0, len(matches), batch_size):
-        batch = matches[i:i + batch_size]
-        tasks = [analyze_match_with_risk_profile(m, risk_profile) for m in batch]
-        results = await asyncio.gather(*tasks)
-        all_results.extend(results)
-    return all_results
+# ==========================================
+# NEW: BACKGROUND DAILY ANALYSIS
+# ==========================================
+@app.get("/api/daily-analysis")
+async def run_daily_analysis():
+    """Fetches all fixtures, analyzes them, saves to Supabase with status 'ANALYZED'"""
+    print("🔄 Starting Daily Analysis...")
+    
+    today = date.today()
+    matches = fetch_advanced_markets(today, today)
+    print(f"📊 Found {len(matches)} matches to analyze")
+    
+    analyzed_count = 0
+    for match in matches:
+        analysis = await analyze_match_with_risk_profile(match, "safe")
+        
+        if analysis:
+            try:
+                supabase.table("predictions").insert({
+                    "match_name": match['match_name'],
+                    "league": match['league'],
+                    "match_date": match.get('match_date'),
+                    "selected_market": analysis['selected_market'],
+                    "estimated_odds": analysis['estimated_odds'],
+                    "confidence": analysis['confidence'],
+                    "reasoning": analysis.get('reasoning', ''),
+                    "risk_profile": "safe",
+                    "model_used": "Llama-3.3-70B-Safe",
+                    "status": "ANALYZED",  # Pre-analyzed, not in a slip yet
+                    "slip_id": None
+                }).execute()
+                analyzed_count += 1
+            except Exception as e:
+                print(f"Supabase Save Error: {e}")
+    
+    return {"message": f"Analyzed {analyzed_count} matches out of {len(matches)}"}
+
+# ==========================================
+# NEW: GET ANALYZED MATCHES
+# ==========================================
+@app.get("/api/analyzed-matches")
+def get_analyzed_matches():
+    """Returns all matches analyzed for today with status 'ANALYZED'"""
+    try:
+        today = date.today().strftime('%Y-%m-%d')
+        response = supabase.table("predictions").select("*").eq("status", "ANALYZED").gte("match_date", today).execute()
+        return response.data
+    except Exception as e:
+        return {"error": str(e)}
+
+# ==========================================
+# UPDATED: BUILD SLIP FROM SELECTED MATCHES
+# ==========================================
+class SlipRequest(BaseModel):
+    selected_matches: list[str]  # List of match IDs from Supabase
+    target_odds: float = 10.0
+    risk_profile: str = "safe"
+
+@app.post("/api/build-slip-from-selection")
+async def build_slip_from_selection(request: SlipRequest):
+    """Builds a slip from pre-analyzed matches selected by user"""
+    print(f"\n--- BUILDING SLIP FROM {len(request.selected_matches)} SELECTED MATCHES ---")
+    
+    # Fetch the selected matches from Supabase
+    response = supabase.table("predictions").select("*").in_("id", request.selected_matches).execute()
+    selected_picks = response.data
+    
+    if not selected_picks:
+        raise HTTPException(status_code=404, detail="No valid matches selected")
+    
+    # Sort by confidence (for safe) or value (for aggressive)
+    if request.risk_profile == "safe":
+        selected_picks.sort(key=lambda x: x['confidence'], reverse=True)
+    else:
+        selected_picks.sort(key=lambda x: x['estimated_odds'] * x['confidence'] / 100, reverse=True)
+    
+    # Build accumulator
+    accumulator = []
+    total_odds = 1.0
+    slip_id = f"SLIP-{datetime.now().strftime('%Y%m%d-%H%M')}"
+    
+    for pick in selected_picks:
+        if total_odds >= request.target_odds * 0.9: break
+        accumulator.append(pick)
+        total_odds *= pick['estimated_odds']
+        
+        # Update status from ANALYZED to PENDING (now part of a slip)
+        supabase.table("predictions").update({
+            "slip_id": slip_id,
+            "status": "PENDING",
+            "risk_profile": request.risk_profile,
+            "target_odds": request.target_odds
+        }).eq("id", pick['id']).execute()
+
+    return {
+        "slip_id": slip_id, 
+        "target_odds": request.target_odds, 
+        "actual_odds": round(total_odds, 2),
+        "risk_profile": request.risk_profile, 
+        "number_of_legs": len(accumulator), 
+        "picks": accumulator
+    }
 
 # ==========================================
 # 4. OUTCOME TRACKING (THE RECORD KEEPER)
@@ -270,38 +361,33 @@ def evaluate_bet(market: str, home_score: int, away_score: int) -> str:
         if "+1.5" in market_lower and "away" in market_lower:
             return "WON" if (away_score + 1.5) > home_score else "LOST"
             
-    return "VOID" # If market type isn't recognized by our parser
+    return "VOID"
 
 @app.get("/api/update-results")
 def update_results():
     """Fetches finished matches and updates Supabase with WON/LOST status."""
     print("🔄 Starting Result Tracker...")
     
-    # 1. Get all pending predictions from Supabase
     response = supabase.table("predictions").select("*").eq("status", "PENDING").execute()
     pending_picks = response.data
     
     if not pending_picks:
         return {"message": "No pending predictions to update."}
     
-    # 2. Group by date to minimize API calls
     dates_to_check = list(set([p.get('match_date', '')[:10] for p in pending_picks if p.get('match_date')]))
     headers = {"x-apisports-key": API_FOOTBALL_KEY}
     
     updated_count = 0
     
     for check_date in dates_to_check:
-        # Fetch finished games for this date (1 API request per date)
         url = f"https://v3.football.api-sports.io/fixtures?date={check_date}&status=FT"
         res = requests.get(url, headers=headers, timeout=10)
         
         if res.status_code == 200:
             finished_games = res.json().get('response', [])
-            # Create a quick lookup dictionary for finished games
             game_lookup = {f"{g['teams']['home']['name']} vs {g['teams']['away']['name']}": g for g in finished_games}
             
             for pick in pending_picks:
-                # SAFETY CHECK: Skip if match_date is None
                 if not pick.get('match_date'):
                     continue
                     
@@ -314,7 +400,6 @@ def update_results():
                         
                         result_status = evaluate_bet(pick['selected_market'], home_score, away_score)
                         
-                        # Update Supabase
                         supabase.table("predictions").update({
                             "status": result_status,
                             "actual_result": f"{home_score}-{away_score}"
@@ -326,7 +411,7 @@ def update_results():
     return {"message": f"Updated {updated_count} predictions."}
 
 # ==========================================
-# 5. ACCUMULATOR BUILDER
+# 5. ACCUMULATOR BUILDER (OLD - KEEP FOR BACKWARDS COMPAT)
 # ==========================================
 class AccumulatorRequest(BaseModel):
     target_odds: float = 10.0
@@ -342,7 +427,7 @@ async def build_accumulator(request: AccumulatorRequest):
     matches = fetch_advanced_markets(start_date, end_date)
     print(f"\n--- BUILDING {request.risk_profile.upper()} ACCUMULATOR ---")
     
-    results = await process_in_batches(matches, request.risk_profile, batch_size=3)
+    results = await asyncio.gather(*[analyze_match_with_risk_profile(m, request.risk_profile) for m in matches[:3]])
     
     approved_picks = []
     for i, result in enumerate(results):
