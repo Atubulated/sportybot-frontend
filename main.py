@@ -38,7 +38,7 @@ app.add_middleware(
 client = AsyncOpenAI(
     base_url="https://integrate.api.nvidia.com/v1",
     api_key=os.getenv("NVIDIA_API_KEY"),
-    timeout=90.0
+    timeout=300.0
 )
 
 supabase: Client = create_client(
