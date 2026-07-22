@@ -75,19 +75,27 @@ export default function Home() {
   };
 
   const runDailyAnalysis = async () => {
-    setAnalyzingDaily(true);
-    try {
-      const res = await fetch(`${API_URL}/api/daily-analysis`);
-      const data = await res.json();
-      alert(data.message);
-      fetchAnalyzedMatches();
-    } catch (error) {
-      console.error("Failed to run daily analysis", error);
-      alert("Failed to run daily analysis");
-    } finally {
-      setAnalyzingDaily(false);
+  setAnalyzingDaily(true);
+  try {
+    console.log("API_URL:", API_URL);
+    const res = await fetch(`${API_URL}/api/daily-analysis`);
+    console.log("Response status:", res.status);
+    const data = await res.json();
+    console.log("Response data:", data);
+    
+    if (!res.ok) {
+      throw new Error(data.detail || `Server error: ${res.status}`);
     }
-  };
+    
+    alert(data.message || `Analysis complete`);
+    fetchAnalyzedMatches();
+  } catch (error) {
+    console.error("Failed to run daily analysis", error);
+    alert(error instanceof Error ? error.message : "Failed to run daily analysis");
+  } finally {
+    setAnalyzingDaily(false);
+  }
+};
 
   const updateResults = async () => {
     setUpdatingResults(true);
