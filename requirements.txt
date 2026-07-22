@@ -2,3 +2,8 @@ python-telegram-bot
 groq
 requests
 python-dotenv
+fastapi
+uvicorn
+pydantic
+openai
+supabase
